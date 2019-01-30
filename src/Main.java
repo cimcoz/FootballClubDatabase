@@ -61,7 +61,13 @@ public class Main extends Application {
         Button signUpButton = new Button("Sign Up");
         GridPane.setConstraints(signUpButton,1,3);
         signUpButton.setOnAction(s -> mainWindow.setScene(CreateNewAccountScene.changeToCreateAccountScene()));
-        grid.getChildren().addAll(nameLabel,nameInput,pswdLabel,pswdInput,logInButton,signUpButton);
+
+        Button exitButton = new Button("Exit");
+        GridPane.setConstraints(exitButton,1,4);
+        exitButton.setOnAction(e -> closeProgram());
+        grid.getChildren().addAll(nameLabel,nameInput,pswdLabel,pswdInput,logInButton,signUpButton,exitButton);
+
+
 
         loginScene = new Scene(grid,400,250 );
         mainWindow.setScene(loginScene);

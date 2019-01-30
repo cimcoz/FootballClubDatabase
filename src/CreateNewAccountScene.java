@@ -64,15 +64,26 @@ public class CreateNewAccountScene extends Main{
                                     firstNameInput,personalIDInput,cityInput,streetInput,emailInput,birthdayInput);
 
         Button goBackButton = new Button("Back");
-        GridPane.setConstraints(goBackButton,0,7);
         goBackButton.setOnAction(e -> goBackToPreviousScene());
-        grid.getChildren().add(goBackButton);
 
-        Scene createAccountScene = new Scene(grid,500,500);
-        return createAccountScene;
+        Button createAccountButton = new Button("Create");
+        createAccountButton.setOnAction(e -> createNewAccount());
+
+        HBox layout = new HBox(10);
+        layout.getChildren().addAll(createAccountButton,goBackButton);
+        layout.setAlignment(Pos.CENTER);
+
+        GridPane.setConstraints(layout,1,8);
+        grid.getChildren().add(layout);
+
+
+        return (new Scene(grid,500,500));
     }
     private static void goBackToPreviousScene(){
         mainWindow.setScene(loginScene);
+    }
+    private static void createNewAccount(){
+        //TODO: RUN QUERRY TO ADD NEW KIBIC
     }
 
 
