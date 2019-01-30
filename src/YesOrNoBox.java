@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -35,11 +36,15 @@ public class YesOrNoBox {
             window.close();
         });
 
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(labelMessage,yesButton,noButton);
+        HBox layout = new HBox(10);
+        layout.getChildren().addAll(yesButton,noButton);
         layout.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(layout, 300,150);
+        VBox mainLayout = new VBox(15);
+        mainLayout.getChildren().addAll(labelMessage,layout);
+        mainLayout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(mainLayout, 300,150);
         window.setScene(scene);
         window.showAndWait();
         return answer;

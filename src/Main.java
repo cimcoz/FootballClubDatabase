@@ -17,8 +17,8 @@ import javafx.stage.Stage;
 import java.util.Stack;
 
 public class Main extends Application {
-    private Stage mainWindow;
-
+    protected Stage mainWindow;
+    protected Scene loginScene;
     public static void main(String[] args) {
         launch(args);
     }
@@ -39,7 +39,7 @@ public class Main extends Application {
 
         //Name input
         TextField nameInput = new TextField();
-        nameInput.setPromptText("type username");
+        nameInput.setPromptText("type your email");
         GridPane.setConstraints(nameInput,1,0);
 
         //Password label:
@@ -48,19 +48,22 @@ public class Main extends Application {
 
         //Password input:
         TextField pswdInput = new TextField("");
-        pswdInput.setPromptText("type password");
+        pswdInput.setPromptText("type your personal ID");
         GridPane.setConstraints(pswdInput,1,1);
 
 
         Button logInButton = new Button("Sign In");
         GridPane.setConstraints(logInButton,1,2);
+        logInButton.setOnAction(e -> checkLoginInput(nameInput.getText(),pswdInput.getText()));
+
+
 
         Button signUpButton = new Button("Sign Up");
         GridPane.setConstraints(signUpButton,1,3);
 
         grid.getChildren().addAll(nameLabel,nameInput,pswdLabel,pswdInput,logInButton,signUpButton);
 
-        Scene scene = new Scene(grid,300,300);
+        Scene scene = new Scene(grid,400,250 );
         mainWindow.setScene(scene);
 
 
@@ -74,8 +77,15 @@ public class Main extends Application {
 
     }
 
-    private void checkLoginInput(){
+    private void checkLoginInput(String username, String password){
+        //TODO; NEED TO CHECK IF USRNAME AND PSWD IS CORRECT (IS IN DATABASE)
 
+        mainWindow.setScene(CreateNewAccountScene.changeToCreateAccountScene());
+        if(true){
+
+        }else{
+
+        }
     }
     private void closeProgram(){
         boolean storeAnswer = YesOrNoBox.close("Are you sure you want to close the Application?");
