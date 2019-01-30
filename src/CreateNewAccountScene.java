@@ -16,7 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.util.Stack;
 public class CreateNewAccountScene extends Main{
-    public static Scene changeToCreateAccountScene() {
+    public static  Scene changeToCreateAccountScene() {
         Label titleLabel = new Label("Create new account");
 
         GridPane grid = new GridPane();
@@ -65,14 +65,16 @@ public class CreateNewAccountScene extends Main{
 
         Button goBackButton = new Button("Back");
         GridPane.setConstraints(goBackButton,0,7);
-        goBackButton.setOnAction(e -> );
+        goBackButton.setOnAction(e -> goBackToPreviousScene());
+        grid.getChildren().add(goBackButton);
 
         Scene createAccountScene = new Scene(grid,500,500);
         return createAccountScene;
     }
-    private void goBackToPreviousScene(){
-
+    private static void goBackToPreviousScene(){
+        mainWindow.setScene(loginScene);
     }
+
 
 }
 /*

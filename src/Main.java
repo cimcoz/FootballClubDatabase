@@ -17,8 +17,8 @@ import javafx.stage.Stage;
 import java.util.Stack;
 
 public class Main extends Application {
-    protected Stage mainWindow;
-    protected Scene loginScene;
+    protected static Stage mainWindow;
+    protected static Scene loginScene;
     public static void main(String[] args) {
         launch(args);
     }
@@ -60,11 +60,11 @@ public class Main extends Application {
 
         Button signUpButton = new Button("Sign Up");
         GridPane.setConstraints(signUpButton,1,3);
-
+        signUpButton.setOnAction(s -> mainWindow.setScene(CreateNewAccountScene.changeToCreateAccountScene()));
         grid.getChildren().addAll(nameLabel,nameInput,pswdLabel,pswdInput,logInButton,signUpButton);
 
-        Scene scene = new Scene(grid,400,250 );
-        mainWindow.setScene(scene);
+        loginScene = new Scene(grid,400,250 );
+        mainWindow.setScene(loginScene);
 
 
 
@@ -76,11 +76,9 @@ public class Main extends Application {
 
 
     }
-
     private void checkLoginInput(String username, String password){
         //TODO; NEED TO CHECK IF USRNAME AND PSWD IS CORRECT (IS IN DATABASE)
 
-        mainWindow.setScene(CreateNewAccountScene.changeToCreateAccountScene());
         if(true){
 
         }else{
