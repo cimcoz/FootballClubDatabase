@@ -37,6 +37,7 @@ public class CreateNewAccountScene extends Main{
         Label birthdayLabel = new Label("Birthday date:");
 
 
+
         //inputs
         TextField lastNameInput = new TextField();
         TextField firstNameInput = new TextField();
@@ -45,6 +46,8 @@ public class CreateNewAccountScene extends Main{
         TextField streetInput = new TextField();
         TextField emailInput = new TextField();
         TextField birthdayInput = new TextField();
+
+
 
         //putting on gridpane
         GridPane.setConstraints(lastNameLabel,0,0);
@@ -87,7 +90,6 @@ public class CreateNewAccountScene extends Main{
         mainWindow.setScene(loginScene);
     }
     private static void createNewAccount(String lastName, String firstName, String personalID , String city, String street, String mail, String bday){
-        //TODO: RUN PROCEDURE TO ADD NEW KIBIC
         try {
             PreparedStatement st = conn.prepareStatement("EXEC zaloz_karte_kibica(?,?,?,?,?,?,?) ");
             st.setString(1, lastName);
@@ -107,13 +109,3 @@ public class CreateNewAccountScene extends Main{
 
 
 }
-/*
-     imie nvarchar (64) NOT NULL ,
-     nazwisko NVARCHAR (64) NOT NULL ,
-     pesel NVARCHAR (10) NOT NULL ,
-     miasto NVARCHAR (64) NOT NULL ,
-     ulica NVARCHAR (64) NOT NULL ,
-     email NVARCHAR (64) ,
-     data_urodzenia DATE NOT NULL,
-     znizka float
-*/

@@ -93,7 +93,6 @@ public class Main extends Application {
 
     }
     private void checkLoginInput(String username, String password){
-        //TODO; NEED TO CHECK IF USRNAME AND PSWD IS CORRECT (IS IN DATABASE)
         try {
             PreparedStatement stmt = conn.prepareStatement("select SUM(*) from kibice where email = ? and pesel = ?");
 
