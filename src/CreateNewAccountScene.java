@@ -14,6 +14,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.util.Stack;
 public class CreateNewAccountScene extends Main{
     public static  Scene changeToCreateAccountScene() {
@@ -67,7 +70,8 @@ public class CreateNewAccountScene extends Main{
         goBackButton.setOnAction(e -> goBackToPreviousScene());
 
         Button createAccountButton = new Button("Create");
-        createAccountButton.setOnAction(e -> createNewAccount());
+        createAccountButton.setOnAction(e -> createNewAccount(lastNameInput.getText(),firstNameInput.getText(), personalIDInput.getText() ,cityInput.getText(), streetInput.getText(),
+                                                                emailInput.getText(),  birthdayInput.getText()));
 
         HBox layout = new HBox(10);
         layout.getChildren().addAll(createAccountButton,goBackButton);
@@ -82,8 +86,23 @@ public class CreateNewAccountScene extends Main{
     private static void goBackToPreviousScene(){
         mainWindow.setScene(loginScene);
     }
-    private static void createNewAccount(){
-        //TODO: RUN QUERRY TO ADD NEW KIBIC
+    private static void createNewAccount(String lastName, String firstName, String personalID , String city, String street, String mail, String bday){
+        //TODO: RUN PROCEDURE TO ADD NEW KIBIC
+        try {
+            PreparedStatement st = conn.prepareStatement("EXEC zaloz_karte_kibica(?,?,?,?,?,?,?) ");
+            st.setString(1, lastName);
+            st.setString(2, firstName);
+            st.setString(3, personalID);
+            st.setString(4, city);
+            st.setString(5, street);
+            st.setString(6, mail);
+            st.setString(7, bday);
+            st.executeUpdate();
+            WarningWindow.showErrorMessege("", "You created account successfully!");
+        }catch(Exception e) {
+            WarningWindow.showErrorMessege("Error","Sorry. There is an error in database");
+            e.printStackTrace();
+        }
     }
 
 

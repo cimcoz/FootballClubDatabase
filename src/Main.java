@@ -13,14 +13,24 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.Stack;
-
+import java.sql.*;
 public class Main extends Application {
     protected static Stage mainWindow;
     protected static Scene loginScene;
+    protected static Connection conn;
+
     public static void main(String[] args) {
+        connectToDatabase();
         launch(args);
+    }
+    static private void  connectToDatabase() {
+        String url = "jdbc:sqlserver://DESKTOP-IPU4241\\SQLEXPRESS:61290;databaseName=Klub;integratedSecurity=true";
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -84,18 +94,33 @@ public class Main extends Application {
     }
     private void checkLoginInput(String username, String password){
         //TODO; NEED TO CHECK IF USRNAME AND PSWD IS CORRECT (IS IN DATABASE)
+        try {
+            PreparedStatement stmt = conn.prepareStatement("select SUM(*) from kibice where email = ? and pesel = ?");
 
-        if(true){
 
-        }else{
-
+            stmt.setString(1,username);
+            stmt.setString(2,password);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            int output = rs.getInt(1);
+            if(output>0) {
+                //TODO:GO TO LOGGED USER
+            }else{
+                WarningWindow.showErrorMessege("","Wrong username/password");
+            }
+        }catch(Exception e){
+            WarningWindow.showErrorMessege("Error","Sorry. There is an error in database.");
         }
+
+
     }
     private void closeProgram(){
         boolean storeAnswer = YesOrNoBox.close("Are you sure you want to close the Application?");
         if(storeAnswer)
             Platform.exit();
     }
+
+
 
 
 }

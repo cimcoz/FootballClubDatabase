@@ -9,7 +9,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.util.Stack;
 //public class LoggedUserScene {
 //    Scene loggedUserScene;
