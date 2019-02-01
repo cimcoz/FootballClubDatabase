@@ -8,14 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class LoggedUser extends Main{
-    String username, password;
-    LoggedUser(String usrname, String pswd){
-        username=usrname; password = pswd;
-    }
     public static  Scene loggedUserScene(String username, String password){
 
 
         Scene loggedUserScene = setSceneToUserInfo(username,password);
+        loggedUserScene.getStylesheets().add("Style.css");
+
         return loggedUserScene;
     }
     private static Scene setSceneToUserInfo(String username, String password){

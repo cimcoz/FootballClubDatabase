@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 public class ExtendTicketValidity extends  Main{
     public static Scene extendTicketValidityScene(String usrname, String pswd){
         Scene scene = setScene(usrname, pswd);
+        scene.getStylesheets().add("Style.css");
         return scene;
     }
     private static Scene setScene(String usrname, String pswd){
@@ -43,7 +44,7 @@ public class ExtendTicketValidity extends  Main{
     private static void extendTicketValidityInDatabase(String usrname, String pswd, String time){
         try {
             int days = Integer.parseInt(time);
-            PreparedStatement st = conn.prepareStatement("EXEC przedluz_karnet(?,?,?) ");
+            PreparedStatement st = conn.prepareStatement("EXEC przedluz_karnet ?,?,? ");
             st.setString(1, pswd);
             st.setString(2,usrname);
             st.setInt(3,days);

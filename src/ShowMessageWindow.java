@@ -13,6 +13,7 @@ public class ShowMessageWindow extends Main{
         messageWindow.setTitle(title);
 
         Label label = new Label(message);
+        label.setStyle("-fx-font-size: 15");
 
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> messageWindow.close());

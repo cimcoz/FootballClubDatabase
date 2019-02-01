@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 public class CreateNewAccount extends Main{
     public static Scene createNewAccountScene(){
         Scene scene = changeToCreateAccountScene();
+        scene.getStylesheets().add("Style.css");
         return scene;
     }
     private static  Scene changeToCreateAccountScene() {
@@ -90,7 +91,7 @@ public class CreateNewAccount extends Main{
     }
     private static void createNewAccount(String lastName, String firstName, String personalID , String city, String street, String mail, String bday, String ticketValidity){
         try {
-            PreparedStatement st = conn.prepareStatement("EXEC zaloz_karte_kibica(?,?,?,?,?,?,?,?) ");
+            PreparedStatement st = conn.prepareStatement("EXEC zaloz_karte_kibica ?,?,?,?,?,?,?,? ");
             st.setString(1, lastName);
             st.setString(2, firstName);
             st.setString(3, personalID);

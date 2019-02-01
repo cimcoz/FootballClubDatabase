@@ -1,9 +1,11 @@
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +13,7 @@ import java.sql.ResultSet;
 public class LogIn extends Main {
     public static Scene logInScene(){
         Scene loginScene = setLogInScene();
+        loginScene.getStylesheets().add("Style.css");
         return loginScene;
     }
     private static Scene setLogInScene(){
@@ -39,19 +42,21 @@ public class LogIn extends Main {
 
 
         Button logInButton = new Button("Sign In");
-        GridPane.setConstraints(logInButton,1,2);
         logInButton.setOnAction(e -> checkLoginInput(nameInput.getText(),pswdInput.getText()));
 
-
-
         Button signUpButton = new Button("Sign Up");
-        GridPane.setConstraints(signUpButton,1,3);
         signUpButton.setOnAction(s -> mainWindow.setScene(CreateNewAccount.createNewAccountScene()));
 
+        HBox signButtons = new HBox(10);
+        signButtons.getChildren().addAll( logInButton,signUpButton);
+        signButtons.setAlignment(Pos.BASELINE_LEFT);
+        GridPane.setConstraints(signButtons,1,2);
+
         Button exitButton = new Button("Exit");
-        GridPane.setConstraints(exitButton,1,4);
+        exitButton.getStyleClass().add("button-red");
+        GridPane.setConstraints(exitButton,1,3);
         exitButton.setOnAction(e -> closeProgram());
-        grid.getChildren().addAll(nameLabel,nameInput,pswdLabel,pswdInput,logInButton,signUpButton,exitButton);
+        grid.getChildren().addAll(nameLabel,nameInput,pswdLabel,pswdInput,signButtons,exitButton);
 
         return (new Scene(grid,400,260));
     }

@@ -69,12 +69,11 @@ public class EditFansData extends Main{
         grid.getChildren().add(buttons);
 
 
-        Scene scene = new Scene(grid,500,500);
-        return scene;
+        return (new Scene(grid,500,500));
     }
     private  static void updateDataInDatabase(String lastName, String firstName, String personalID , String city, String street, String mail, String bday){
         try {
-            PreparedStatement st = conn.prepareStatement("EXEC edytuj_informacje_kibica(?,?,?,?,?,?,?,?) ");
+            PreparedStatement st = conn.prepareStatement("EXEC edytuj_informacje_kibica ?,?,?,?,?,?,?,? ");
             st.setString(1, lastName);
             st.setString(2, firstName);
             st.setString(3, personalID);
