@@ -83,7 +83,8 @@ public class EditFansData extends Main{
             st.setString(6, mail);
             st.setString(7, bday);
             st.executeUpdate();
-            ShowMessageWindow.showMessageAndChangeScene("", "You've changed your data successfully!", LoggedUser.loggedUserScene(mail,personalID));
+            ShowMessageWindow.showMessege("", "You've changed your data successfully!");
+            mainWindow.setScene(LoggedUser.loggedUserScene(mail,personalID));
         }catch(Exception e) {
             ShowMessageWindow.showMessege("Error","Sorry. There is an error in database.");
             e.printStackTrace();

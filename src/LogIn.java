@@ -53,7 +53,7 @@ public class LogIn extends Main {
         exitButton.setOnAction(e -> closeProgram());
         grid.getChildren().addAll(nameLabel,nameInput,pswdLabel,pswdInput,logInButton,signUpButton,exitButton);
 
-        return (new Scene(grid,400,400));
+        return (new Scene(grid,400,260));
     }
     private static void checkLoginInput(String username, String password){
         try {

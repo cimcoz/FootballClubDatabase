@@ -102,7 +102,7 @@ public class CreateNewAccount extends Main{
             int ticketVal = Integer.parseInt(ticketValidity);
             st.setInt(8,ticketVal);
             st.executeUpdate();
-            ShowMessageWindow.showMessageAndChangeScene("", "You created account successfully!", LoggedUser.loggedUserScene(mail,personalID));
+            ShowMessageWindow.showMessege("", "You created account successfully!\n E-mail is your username and personal ID is password now");
         }catch(Exception e) {
             ShowMessageWindow.showMessege("Error","Sorry. There is an error in database");
             e.printStackTrace();

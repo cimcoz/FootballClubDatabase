@@ -48,7 +48,8 @@ public class ExtendTicketValidity extends  Main{
             st.setString(2,usrname);
             st.setInt(3,days);
             st.executeUpdate();
-            ShowMessageWindow.showMessageAndChangeScene("", "You've changed your ticket's validity  successfully!", LoggedUser.loggedUserScene(usrname,pswd));
+            ShowMessageWindow.showMessege("", "You've changed your ticket's validity  successfully!");
+            mainWindow.setScene(LoggedUser.loggedUserScene(usrname,pswd));
         }catch(Exception e) {
             ShowMessageWindow.showMessege("Error","Sorry. There is an error in database.");
             e.printStackTrace();
