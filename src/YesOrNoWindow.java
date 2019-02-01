@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.util.Stack;
 
-public class YesOrNoBox {
+public class YesOrNoWindow {
     static boolean answer;
 
     public static boolean close(String message){

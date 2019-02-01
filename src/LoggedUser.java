@@ -1,31 +1,24 @@
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Stack;
-public class LoggedUserScene extends Main{
-    Scene loggedUserScene;
-    public Scene loggedScene(String username, String password){
+
+public class LoggedUser extends Main{
+    String username, password;
+    LoggedUser(String usrname, String pswd){
+        username=usrname; password = pswd;
+    }
+    public static  Scene loggedUserScene(String username, String password){
 
 
         Scene loggedUserScene = setSceneToUserInfo(username,password);
         return loggedUserScene;
     }
-    private Scene setSceneToUserInfo(String username, String password){
+    private static Scene setSceneToUserInfo(String username, String password){
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
         grid.setVgap(8);
@@ -39,6 +32,7 @@ public class LoggedUserScene extends Main{
         Label streetLabel = new Label("Street:");
         Label emailLabel = new Label("E-mail:");
         Label birthdayLabel = new Label("Birthday date:");
+        Label ticketValidity = new Label("Ticket validity:");
         //val labels
         Label lastNameVal = new Label();
         Label firstNameVal = new Label();
@@ -47,8 +41,10 @@ public class LoggedUserScene extends Main{
         Label streetVal = new Label();
         Label emailVal = new Label();
         Label birthdayVal = new Label();
+        Label ticketValidityVal = new Label();
         try {
-            PreparedStatement stmt = conn.prepareStatement("select nazwisko, imie, pesel, miasto, ulica, email, data_urodzenia from kibice where email = ? and pesel = ? ");
+            PreparedStatement stmt = conn.prepareStatement("select nazwisko, imie, pesel, miasto, ulica, email, data_urodzenia, do_kiedy " +
+                    "from kibice as ki inner join karnety as ka on ka.id_kibica = ki.id_kibica where email = ? and pesel = ? ");
             stmt.setString(1,username);
             stmt.setString(2,password);
             ResultSet rs = stmt.executeQuery();
@@ -60,10 +56,21 @@ public class LoggedUserScene extends Main{
                 cityVal.setText(rs.getString(4));
                 streetVal.setText(rs.getString(5));
                 emailVal.setText(rs.getString(6));
-                emailVal.setText(rs.getString(7));
+                birthdayVal.setText(rs.getString(7));
+                ticketValidityVal.setText(rs.getString(8));
         }catch(Exception e){
-            WarningWindow.showErrorMessege("Error","Sorry. There is an error in database.");
+            ShowMessageWindow.showMessege("Error","Sorry. There is an error in database.");
         }
+
+
+        //Buttons
+        Button changeFansInfo = new Button("Change your data");
+        changeFansInfo.setOnAction(s -> mainWindow.setScene(EditFansData.EditFansDataScene(lastNameVal.getText(),firstNameVal.getText(),personalVal.getText(),
+                cityVal.getText(),streetVal.getText(),emailVal.getText(),birthdayVal.getText())));
+
+        Button extendTicketValidity = new Button("Extend ticket validity");
+        extendTicketValidity.setOnAction(e -> mainWindow.setScene(ExtendTicketValidity.extendTicketValidityScene(emailVal.getText(),personalVal.getText())));
+
 
         //putting on gridpane
         GridPane.setConstraints(lastNameLabel,0,0);
@@ -73,6 +80,7 @@ public class LoggedUserScene extends Main{
         GridPane.setConstraints(streetLabel,0,4);
         GridPane.setConstraints(emailLabel,0,5);
         GridPane.setConstraints(birthdayLabel,0,6);
+        GridPane.setConstraints(ticketValidity,0,7);
         GridPane.setConstraints(lastNameVal,1,0);
         GridPane.setConstraints(firstNameVal,1,1);
         GridPane.setConstraints(personalVal,1,2);
@@ -80,9 +88,14 @@ public class LoggedUserScene extends Main{
         GridPane.setConstraints(streetVal,1,4);
         GridPane.setConstraints(emailVal,1,5);
         GridPane.setConstraints(birthdayVal,1,6);
+        GridPane.setConstraints(ticketValidityVal,1,7);
+
 
         grid.getChildren().addAll(lastNameLabel,firstNameLabel,personalIdLabel,cityLabel,streetLabel,emailLabel,birthdayLabel,lastNameVal,
                 firstNameVal,personalVal,cityVal,streetVal,emailVal,birthdayVal);
+
+
+
         return (new Scene(grid,500,500));
     }
 }
