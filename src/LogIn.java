@@ -62,7 +62,7 @@ public class LogIn extends Main {
     }
     private static void checkLoginInput(String username, String password){
         try {
-            PreparedStatement stmt = conn.prepareStatement("select COUNT(ALL) from kibice where email = ? and pesel = ?");
+            PreparedStatement stmt = conn.prepareStatement("select COUNT(*) from kibice where email = ? and pesel = ?");
 
 
             stmt.setString(1,username);

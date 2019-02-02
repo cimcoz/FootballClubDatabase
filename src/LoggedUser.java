@@ -1,8 +1,10 @@
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,6 +71,9 @@ public class LoggedUser extends Main{
         Button extendTicketValidity = new Button("Extend ticket validity");
         extendTicketValidity.setOnAction(e -> mainWindow.setScene(ExtendTicketValidity.extendTicketValidityScene(emailVal.getText(),personalVal.getText())));
 
+        HBox layout = new HBox(10);
+        layout.getChildren().addAll(changeFansInfo,extendTicketValidity);
+        layout.setAlignment(Pos.CENTER);
 
         //putting on gridpane
         GridPane.setConstraints(lastNameLabel,0,0);
@@ -87,10 +92,10 @@ public class LoggedUser extends Main{
         GridPane.setConstraints(emailVal,1,5);
         GridPane.setConstraints(birthdayVal,1,6);
         GridPane.setConstraints(ticketValidityVal,1,7);
-
+        GridPane.setConstraints(layout,1,8);
 
         grid.getChildren().addAll(lastNameLabel,firstNameLabel,personalIdLabel,cityLabel,streetLabel,emailLabel,birthdayLabel,lastNameVal,
-                firstNameVal,personalVal,cityVal,streetVal,emailVal,birthdayVal);
+                firstNameVal,personalVal,cityVal,streetVal,emailVal,birthdayVal,layout);
 
 
 
