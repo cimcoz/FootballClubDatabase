@@ -36,8 +36,10 @@ public class ExtendTicketValidity extends  Main{
         buttons.getChildren().addAll(extendButton,backButton);
         buttons.setAlignment(Pos.CENTER);
 
-        GridPane.setConstraints(buttons,1,9);
-        grid.getChildren().add(buttons);
+        GridPane.setConstraints(lastNameLabel,0,0);
+        GridPane.setConstraints(ticketValidityBox,1,0);
+        GridPane.setConstraints(buttons,1,1);
+        grid.getChildren().addAll(lastNameLabel,ticketValidityBox,buttons);
         return (new Scene(grid,500,500));
 
     }
