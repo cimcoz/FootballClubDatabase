@@ -94,8 +94,8 @@ public class LoggedUser extends Main{
         GridPane.setConstraints(ticketValidityVal,1,7);
         GridPane.setConstraints(layout,1,8);
 
-        grid.getChildren().addAll(lastNameLabel,firstNameLabel,personalIdLabel,cityLabel,streetLabel,emailLabel,birthdayLabel,lastNameVal,
-                firstNameVal,personalVal,cityVal,streetVal,emailVal,birthdayVal,layout);
+        grid.getChildren().addAll(lastNameLabel,firstNameLabel,personalIdLabel,cityLabel,streetLabel,emailLabel,birthdayLabel,ticketValidity,lastNameVal,
+                firstNameVal,personalVal,cityVal,streetVal,emailVal,birthdayVal,ticketValidityVal,layout);
 
 
 
