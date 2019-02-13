@@ -1,6 +1,6 @@
---CREATE DATABASE Klub
+CREATE DATABASE Klub
 
---USE Klub
+USE Klub
 
 CREATE TABLE bilety (
     id_miejsca   INTEGER NOT NULL,
