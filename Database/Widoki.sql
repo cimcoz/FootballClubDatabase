@@ -1,37 +1,15 @@
-CREATE VIEW AktualneRezerwacje
-AS
-SELECT RO.*, R.nazwa AS rezerwujacy, O.nazwa AS obiekt, O.adres
-FROM [Rezerwacje obiektow] AS RO
-JOIN Rezerwujacy AS R ON RO.id_rezerwujacego = R.id_rezerwujacego
-JOIN [Obiekty sportowe] AS O ON O.id_obiektu = RO.id_obiektu
-WHERE RO.od_kiedy > GETDATE()
 
-CREATE VIEW AktualneKarnety
-AS  
-SELECT K.* FROM Karnety AS K JOIN Stadion AS S ON K.id_karnetu = S.id_karnetu
+create view AktualneKarnety as  
+select K.* from Karnety as K join Stadion as S on K.id_karnetu = S.id_karnetu;
 
-CREATE VIEW NajblizszeMecze
-AS  
-SELECT TOP 3 T.*, sprzedane_bilety FROM Terminarz AS T
-JOIN (SELECT COUNT(*) AS sprzedane_bilety, id_meczu FROM Bilety
-	GROUP BY id_meczu) AS B
-ON T.id_meczu = B.id_meczu
-WHERE data > GETDATE()
-ORDER BY data ASC
 
-CREATE VIEW SprzedaneBilety
-AS
-SELECT B.* FROM Bilety AS B JOIN (SELECT TOP 1 id_meczu FROM NajblizszeMecze) AS N
-ON B.id_meczu = N.id_meczu
-
-CREATE VIEW IloscRezerwacji
-AS
-SELECT R.*, I.Ilosc FROM Rezerwujacy AS R JOIN 
-	(SELECT COUNT(*) AS Ilosc, RE.id_rezerwujacego
-	FROM Rezerwujacy AS RE JOIN [Rezerwacje obiektow] AS RO
-	ON RE.id_rezerwujacego = RO.id_rezerwujacego
-	GROUP BY RE.id_rezerwujacego) AS I
-ON R.id_rezerwujacego = I.id_rezerwujacego
+create view IloscRezerwacji as
+select R.*, I.Ilosc from Rezerwujacy as R join 
+	(select COUNT(*) as Ilosc, RE.id_rezerwujacego
+	from Rezerwujacy as RE join [Rezerwacje obiektow] as RO
+	on RE.id_rezerwujacego = RO.id_rezerwujacego
+	group by RE.id_rezerwujacego) as I
+on R.id_rezerwujacego = I.id_rezerwujacego;
 
 create view kontuzjowani_zawodnicy as
 select nazwisko, imie, nazwa_urazu, pozycja,  poczatek_przerwy, koniec_przerwy

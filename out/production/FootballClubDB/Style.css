@@ -1,0 +1,14 @@
+.root{
+    -fx-background-color: linear-gradient(#A6A9A6, #343734);
+}
+.label{
+    -fx-font-weight: bold;
+}
+.button{
+    -fx-background-color: linear-gradient(#FEFEFE, #CCCDCD);
+    -fx-background-radius: 5;
+}
+.button-red{
+    -fx-background-color: #AB4642;
+    -fx-text-fill: #FFFFFF;
+}

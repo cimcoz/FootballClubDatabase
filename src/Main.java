@@ -18,9 +18,9 @@ public class Main extends Application {
         launch(args);
     }
     static private void  connectToDatabase() {
-        String url = "jdbc:sqlserver://DESKTOP-IPU4241\\SQLEXPRESS:61290;databaseName=Klub;integratedSecurity=true";
+        String url = "jdbc:mysql://localhost:3306/klub";
         try {
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url,"root","likopkii");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

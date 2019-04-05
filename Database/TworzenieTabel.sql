@@ -1,39 +1,34 @@
-CREATE DATABASE Klub
+CREATE DATABASE Klub;
 
-USE Klub
+USE Klub;
 
-CREATE TABLE bilety (
+create table bilety (
     id_miejsca   INTEGER NOT NULL,
     id_kibica    INTEGER NOT NULL,
     id_meczu     INTEGER NOT NULL,
-    cena         money NOT NULL
-)
-
-CREATE NONCLUSTERED INDEX 
-    Bilety__IDX ON Bilety 
-    ( 
-     id_meczu 
-    ) 
-
-CREATE nonclustered index bilety__idxv1 ON bilety ( id_kibica )
+    cena         DECIMAL(12,2) NOT NULL
+);
 
 
-ALTER TABLE Bilety ADD constraint bilety_pk PRIMARY KEY CLUSTERED (id_kibica, id_meczu)
+create unique index bilety__idxv1 ON bilety ( id_kibica );
 
-CREATE TABLE karnety (
-    id_karnetu   INTEGER NOT NULL IDENTITY(1,1) PRIMARY KEY,
+
+alter table Bilety ADD constraint bilety_pk PRIMARY KEY CLUSTERED (id_kibica, id_meczu);
+
+create table karnety (
+    id_karnetu   INTEGER NOT NULL auto_increment PRIMARY KEY,
     id_kibica    INTEGER NOT NULL,
-    cena         money NOT NULL,
+    cena         DECIMAL(12,2) NOT NULL,
     od_kiedy     DATE NOT NULL,
     do_kiedy     DATE NOT NULL
-)
+);
 
-CREATE nonclustered index karnety__idx ON karnety(od_kiedy,do_kiedy)
+create unique index karnety__idx ON karnety(od_kiedy,do_kiedy);
 
 
-CREATE TABLE kibice 
+create table kibice 
     (
-    id_kibica   INTEGER NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    id_kibica   INTEGER NOT NULL auto_increment PRIMARY KEY,
     imie        nvarchar (64) NOT NULL , 
      nazwisko NVARCHAR (64) NOT NULL , 
      pesel NVARCHAR (10) NOT NULL , 
@@ -42,93 +37,89 @@ CREATE TABLE kibice
      email NVARCHAR (64) , 
      data_urodzenia DATE NOT NULL,
 znizka float,
-karta_kibica bit )
+karta_kibica bit );
 
-CREATE NONCLUSTERED INDEX 
+create unique INDEX 
     Kibice__IDX ON Kibice 
     ( 
      nazwisko , 
      imie 
-    ) 
+    ) ;
 
-CREATE nonclustered index kibice__idxv1 ON kibice ( data_urodzenia )
+create unique index kibice__idxv1 ON kibice ( data_urodzenia );
 
-CREATE TABLE "Obiekty sportowe" 
+create table Obiekty_sportowe
     (
-    id_obiektu   INTEGER NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    id_obiektu   INTEGER NOT NULL auto_increment PRIMARY KEY,
     adres        nvarchar (128) NOT NULL , 
-     nazwa NVARCHAR (64) NOT NULL ,uwagi nvarchar(256) )
+     nazwa NVARCHAR (64) NOT NULL ,uwagi nvarchar(256) 
+     );
 
 
-CREATE TABLE "Rezerwacje obiektow" (
-    id_rezerwacji      INTEGER NOT NULL IDENTITY(1,1) PRIMARY KEY,
+create table Rezerwacje_obiektow(
+    id_rezerwacji      INTEGER NOT NULL auto_increment PRIMARY KEY,
     id_obiektu         INTEGER NOT NULL,
     id_rezerwujacego   INTEGER NOT NULL,
     od_kiedy           DATETIME NOT NULL,
     do_kiedy           DATETIME NOT NULL
-)
+);
 
-CREATE nonclustered index "Rezerwacje obiektow__IDX" ON "Rezerwacje obiektow"(od_kiedy,do_kiedy) 
+create unique index Rezerwacje_obiektow__IDX ON Rezerwacje_obiektow(od_kiedy,do_kiedy) ;
 
-CREATE TABLE rezerwujacy 
+create table rezerwujacy 
     (
-    id_rezerwujacego   INTEGER NOT NULL IDENTITY(1,1) PRIMARY KEY,
-    nazwa              nvarchar (64) NOT NULL ) 
+    id_rezerwujacego   INTEGER NOT NULL auto_increment PRIMARY KEY,
+    nazwa              nvarchar (64) NOT NULL 
+    ); 
 
-CREATE TABLE stadion (
-    id_miejsca   INTEGER NOT NULL IDENTITY(1,1) PRIMARY KEY,
+create table stadion (
+    id_miejsca   INTEGER NOT NULL auto_increment PRIMARY KEY,
     sektor       tinyint NOT NULL,
     rzad         tinyint NOT NULL,
     miejsce      tinyint NOT NULL,
     id_karnetu   INTEGER
-)
+);
 
 
-CREATE TABLE terminarz 
+create table terminarz 
     (
-    id_meczu     INTEGER NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    id_meczu     INTEGER NOT NULL auto_increment PRIMARY KEY,
     data         DATE NOT NULL,
     przeciwnik   nvarchar (64) NOT NULL , 
      rozgrywki NVARCHAR (64) NOT NULL , 
-     stadion NVARCHAR (64) NOT NULL ) 
+     stadion NVARCHAR (64) NOT NULL ) ;
 
-ALTER TABLE Bilety
+alter table Bilety
     ADD CONSTRAINT bilety_kibice_fk FOREIGN KEY ( id_kibica )
-        REFERENCES kibice ( id_kibica )
+        REFERENCES kibice ( id_kibica );
 
-ALTER TABLE Bilety
+alter table Bilety
     ADD CONSTRAINT bilety_stadion_fk FOREIGN KEY ( id_miejsca )
-        REFERENCES stadion ( id_miejsca )
+        REFERENCES stadion ( id_miejsca );
 
-ALTER TABLE Bilety
+alter table Bilety
     ADD CONSTRAINT bilety_terminarz_fk FOREIGN KEY ( id_meczu )
-        REFERENCES terminarz ( id_meczu )
+        REFERENCES terminarz ( id_meczu );
 
-ALTER TABLE Karnety
+alter table Karnety
     ADD CONSTRAINT karnety_kibice_fk FOREIGN KEY ( id_kibica )
-        REFERENCES kibice ( id_kibica )
+        REFERENCES kibice ( id_kibica );
 
-ALTER TABLE "Rezerwacje obiektow" ADD CONSTRAINT "Rezerwacje obiektow_Obiekty sportowe_FK" FOREIGN KEY ( id_obiektu )
-    REFERENCES "Obiekty sportowe" (id_obiektu) 
 
-ALTER TABLE "Rezerwacje obiektow"
-    ADD CONSTRAINT "Rezerwacje obiektow_Rezerwujacy_FK" FOREIGN KEY ( id_rezerwujacego )
-        REFERENCES rezerwujacy ( id_rezerwujacego )
-
-ALTER TABLE Stadion
+alter table Stadion
     ADD CONSTRAINT table_5_karnety_fk FOREIGN KEY ( id_karnetu )
-        REFERENCES karnety ( id_karnetu )
+        REFERENCES karnety ( id_karnetu );
 
 
 create table Dzial_pracowniczy
 (
-	id_dzialu smallint identity(1,1) primary key,
+	id_dzialu smallint auto_increment primary key,
 	nazwa varchar(30) NOT NULL unique,
     miesieczne_wynagrodzenie int NOT NULL
 );
 create table Pracownicy
 (
-	id_pracownika smallint identity(1,1) primary key,
+	id_pracownika smallint auto_increment primary key,
 	id_dzialu smallint,
     nazwisko varchar(30) NOT NULL,
     imie varchar(30),
@@ -137,7 +128,7 @@ create table Pracownicy
 
 create table Kontrakty
 (
-	id_kontraktu smallint identity(1,1) primary key,
+	id_kontraktu smallint auto_increment primary key,
     poczatek date not null,
     koniec date not null,
     miesieczne_wynagrodzenie int not null,
@@ -145,13 +136,13 @@ create table Kontrakty
 );
 create table Wypozyczenia
 (
-	id_wypozyczenia smallint identity(1,1) primary key,
+	id_wypozyczenia smallint auto_increment primary key,
 	z varchar(30) NULL,
 	do varchar(30) NOT NULL,
     poczatek date not null,
     koniec date not null,
 	miesieczne_wynagrodzenie int not null,
-    cena_pierwokupu bit null,
+    cena_pierwokupu bit null
 );
 create table Bonusy
 (
@@ -163,7 +154,7 @@ create table Bonusy
 );
 create table Zawodnicy
 (
-	id_zawodnika smallint identity(1,1) primary key,
+	id_zawodnika smallint auto_increment primary key,
     nazwisko varchar(30) NOT NULL,
     imie varchar(20),
     pozycja varchar(3) NOT NULL,
@@ -178,7 +169,7 @@ create table Zawodnicy
 );
 create table Kontuzje
 (
-	id_kontuzji int identity(1,1) primary key,
+	id_kontuzji int auto_increment primary key,
 	id_zawodnika smallint,
     nazwa_urazu varchar(40) NOT NULL,
     poczatek_przerwy date NOT NULL,
@@ -187,7 +178,7 @@ create table Kontuzje
 );
 create table Zawieszenia
 (
-	id_zawieszenia int identity(1,1) primary key,
+	id_zawieszenia int auto_increment primary key,
 	id_zawodnika smallint unique,
     poczatek_zawieszenia date not null,
     koniec_zawieszenia date not null,
